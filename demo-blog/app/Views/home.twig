@@ -1,0 +1,22 @@
+{% extends 'partial/layout.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% set data = json.getPosts %}
+            {% for post in data.posts %}
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{post.attachments[0].url}}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title"><a href="{{post.slug|link}}">{{post.title}}</a></span>
+                            <p>{{post.date|full_date}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

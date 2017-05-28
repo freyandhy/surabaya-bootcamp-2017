@@ -1,0 +1,36 @@
+{% extends 'partial/layout.twig' %}
+
+{% block content %}
+    <div class="post">
+        <div class="row">
+            <div class="col s8">
+                <div class="post-wrap">
+                    <div class="post-title"></div>
+                    <div class="post-image"></div>
+                    <div class="post-content"></div>    
+                </div>
+            </div>
+            <div class="col s4">
+                Menu Right
+            </div>
+        </div>
+    </div>
+
+    
+    {% set data = json.getPosts %}
+    {# {{data.posts[1]|print_r}} #}
+{% endblock %}
+
+{% block endbodyjs %}
+    <script src="{{'js/defiant.min.js' | asset_url}}"></script>
+    {% set data = json.getPosts %}
+    <script>
+        var obj = {{data.posts|json_encode|raw}}
+        search = JSON.search(obj, '//*[slug="{{slug}}"]');
+        console.log(search);
+
+        $(".post-title").html(search[0].title);
+        $(".post-image").html('<img src="'+ search[0].attachments[0].url +'" class="responsive-img">');
+        $(".post-content").html(search[0].content);
+    </script>
+{% endblock %}
